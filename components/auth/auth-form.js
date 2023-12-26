@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import classes from "../style/auth-form.module.css";
 
 async function createUser(email, password) {
@@ -9,6 +11,7 @@ async function createUser(email, password) {
       "Content-Type": "application/json",
     },
   });
+  console.log("res", res);
 
   const data = await res.json();
   if (!res.ok) {
@@ -18,6 +21,7 @@ async function createUser(email, password) {
 }
 
 function AuthForm() {
+  const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -33,10 +37,19 @@ function AuthForm() {
     e.preventDefault();
 
     if (isLogin) {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+
+      if (!result.error) {
+        router.replace("/profile");
+      }
     } else {
       try {
         const res = await createUser(enteredEmail, enteredPassword);
-        console.log(res);
+        console.log(res, "res");
       } catch (error) {
         console.log(error);
       }
