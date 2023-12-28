@@ -4,6 +4,8 @@ import { connectToDatabase } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
 
 export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
+
   session: {
     jwt: true,
   },

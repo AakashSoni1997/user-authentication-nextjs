@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import UserProfile from "../components/profile/user-profile";
+// import { getServerSession } from "next-auth";
 
 function ProfilePage() {
   return <UserProfile />;

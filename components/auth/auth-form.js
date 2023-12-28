@@ -11,7 +11,6 @@ async function createUser(email, password) {
       "Content-Type": "application/json",
     },
   });
-  console.log("res", res);
 
   const data = await res.json();
   if (!res.ok) {

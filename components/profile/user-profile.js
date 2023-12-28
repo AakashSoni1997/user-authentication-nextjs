@@ -2,26 +2,23 @@ import classes from "../style/user-profile.module.css";
 import ProfileForm from "./profile-form";
 
 function UserProfile() {
-  // const router = useRouter();
-  // const [isLoading, setIsLoading] = useState(true);
+  async function changePasswordHandler(passwordData) {
+    const res = await fetch(`/api/user/change-password`, {
+      method: "PATCH",
+      body: JSON.stringify(passwordData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  // useEffect(() => {
-  //   getSession().then((session) => {
-  //     if (!session) {
-  //       router.replace("/auth");
-  //     } else {
-  //       setIsLoading(false);
-  //     }
-  //   });
-  // }, []);
+    const data = await res.json();
+    console.log("data", data);
+  }
 
-  // if (isLoading) {
-  //   return <p className={classes.profile}>Loading...</p>;
-  // }
   return (
     <section className={classes.profile}>
       <h1>Your User Profile</h1>
-      <ProfileForm />
+      <ProfileForm onChangePassword={changePasswordHandler} />
     </section>
   );
 }
